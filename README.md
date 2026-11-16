@@ -30,3 +30,13 @@ Download [the ridge walk](https://www.clipreel.com/assets/ridge.mp4), [the aeria
 | `cinematic-edit` | Match color, tighten pacing, and add transitions where they help. |
 
 The CLI and skills are free to install. Render and edit requests use the plan attached to the token’s account. Approve footage removal in the review page before applying a proposal. Use the editor link to adjust any saved project and export again.
+
+## Integrations
+
+- [Official MCP Registry entry](https://registry.modelcontextprotocol.io/v0.1/servers?search=clipreel)
+- [Vercel Skills directory](https://www.skills.sh/kprojectship/clipreel-agent-skills)
+- [Postman API collection](integrations/postman/clipreel.postman_collection.json)
+- [EmDash admin plugin](integrations/emdash)
+- [Dify editing tools](integrations/dify)
+- [n8n community node](integrations/n8n)
+- [Pipedream editing actions](integrations/pipedream)

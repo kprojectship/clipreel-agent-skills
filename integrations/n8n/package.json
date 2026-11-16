@@ -1,0 +1,34 @@
+{
+  "name": "n8n-nodes-clipreel",
+  "version": "0.1.0",
+  "description": "Draft prompt-led video edits and read ClipReel jobs from n8n.",
+  "license": "MIT",
+  "author": "ClipReel",
+  "homepage": "https://www.clipreel.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kprojectship/clipreel-agent-skills.git",
+    "directory": "integrations/n8n"
+  },
+  "bugs": { "url": "https://github.com/kprojectship/clipreel-agent-skills/issues" },
+  "keywords": ["n8n-community-node-package", "clipreel", "video-editing"],
+  "files": ["dist"],
+  "scripts": {
+    "build": "n8n-node build",
+    "prepublishOnly": "n8n-node prerelease"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "strict": true,
+    "credentials": ["dist/credentials/ClipReelApi.credentials.js"],
+    "nodes": ["dist/nodes/ClipReel/ClipReel.node.js"]
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.55.4",
+    "typescript": "5.9.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "publishConfig": { "access": "public" }
+}

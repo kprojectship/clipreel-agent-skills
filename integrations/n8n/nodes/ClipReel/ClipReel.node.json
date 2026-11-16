@@ -1,0 +1,10 @@
+{
+  "node": "n8n-nodes-clipreel.clipReel",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Marketing"],
+  "resources": {
+    "credentialDocumentation": [{ "url": "https://www.clipreel.com/agents/connect" }],
+    "primaryDocumentation": [{ "url": "https://www.clipreel.com/agents/automate-video-editing-with-ai-agents" }]
+  }
+}

@@ -1,0 +1,22 @@
+{
+	"$schema": "./node_modules/@emdash-cms/plugin-cli/schemas/emdash-plugin.schema.json",
+
+	"slug": "clipreel",
+	"publisher": "did:web:clipreel.com",
+
+	"license": "MIT",
+	"author": { "name": "ClipReel", "url": "https://www.clipreel.com/" },
+	"security": { "url": "https://github.com/kprojectship/clipreel-agent-skills/security" },
+	"description": "Look up video projects and render jobs from your EmDash admin.",
+	"repo": "https://github.com/kprojectship/clipreel-agent-skills",
+
+	"capabilities": ["network:request"],
+	"allowedHosts": ["www.clipreel.com"],
+	"keywords": ["video", "editorial", "rendering"],
+	"admin": {
+		"pages": [{ "path": "/projects", "label": "ClipReel", "icon": "video" }],
+		"settingsSchema": {
+			"apiToken": { "type": "secret", "label": "ClipReel API token" }
+		}
+	}
+}
