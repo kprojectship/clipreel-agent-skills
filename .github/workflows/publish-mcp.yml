@@ -1,0 +1,40 @@
+name: Publish ClipReel to the MCP Registry
+
+on:
+  push:
+    branches: [main]
+    paths: [server.json]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: clipreel-mcp-registry
+
+jobs:
+  publish:
+    if: github.repository == 'kprojectship/clipreel-agent-skills' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Install the official MCP publisher
+        run: |
+          set -euo pipefail
+          archive=mcp-publisher_linux_amd64.tar.gz
+          curl --fail --silent --show-error --location --max-time 45 \
+            "https://github.com/modelcontextprotocol/registry/releases/download/v1.8.9/$archive" \
+            --output "$archive"
+          echo "4d527ca8f1ced0394c962dc925c2a4a4addef441cbefd62501c875e9481823a8  $archive" | sha256sum --check
+          tar -xzf "$archive" mcp-publisher
+      - name: Validate the manifest
+        run: ./mcp-publisher validate
+      - name: Publish the remote endpoint
+        run: |
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish

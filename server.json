@@ -1,0 +1,36 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.kprojectship/clipreel",
+  "title": "ClipReel",
+  "description": "Edit video with prompts, draft captions, review previews, reframe clips, and export MP4s.",
+  "version": "1.0.0",
+  "websiteUrl": "https://www.clipreel.com/",
+  "icons": [
+    {
+      "src": "https://www.clipreel.com/assets/clipreel-mark.png",
+      "mimeType": "image/png"
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://www.clipreel.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {clipreel_api_token}",
+          "description": "Create a scoped token at https://www.clipreel.com/agents/connect.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ],
+      "variables": {
+        "clipreel_api_token": {
+          "description": "Your scoped ClipReel agent token",
+          "isRequired": true,
+          "isSecret": true
+        }
+      }
+    }
+  ]
+}
