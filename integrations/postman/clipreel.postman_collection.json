@@ -1,0 +1,233 @@
+{
+  "info": {
+    "name": "ClipReel Video Editing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "[ClipReel](https://www.clipreel.com/) offers prompt-driven video edits, reviewable previews, and editable projects. Create a scoped token in [Connect an agent](https://www.clipreel.com/agents/connect). In Postman Vault, save it as `clipreel_api_token`. Keep the Vault value out of shared environments. Use [API setup and examples](https://www.clipreel.com/agents/automate-video-editing-with-ai-agents) for media imports and edit approvals. Job requests use your ClipReel plan. Preview and obtain owner approval before applying cuts that remove footage."
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{vault:clipreel_api_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://www.clipreel.com"
+    },
+    {
+      "key": "project_id",
+      "value": ""
+    },
+    {
+      "key": "job_id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "REST API",
+      "item": [
+        {
+          "name": "Create private project",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/projects",
+            "description": "Requires project:write. Copy the returned id into project_id. Import media before drafting an edit.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Product walkthrough\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Read project timeline",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/projects/{{project_id}}",
+            "description": "Requires project:read. This can return short-lived private asset links.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Draft prompt-led cut",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/tools/edit_by_prompt",
+            "description": "Requires job:run and an existing project with media. Review the job result and its proposal in ClipReel.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"{{project_id}}\",\n  \"prompt\": \"Draft a concise walkthrough and add readable captions.\",\n  \"captions\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Queue MP4 export",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/api/v1/tools/export_video",
+            "description": "Requires job:run and populated, reviewed project. Copy the returned job ID into job_id.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"{{project_id}}\",\n  \"aspect\": \"16:9\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Read job status",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/v1/jobs/{{job_id}}",
+            "description": "Requires project:read. A completed job can include temporary private output links.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "MCP",
+      "item": [
+        {
+          "name": "Initialize ClipReel MCP",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/mcp",
+            "description": "Check a scoped token and negotiate the MCP version.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"initialize\",\n  \"params\": {\n    \"protocolVersion\": \"2025-11-25\",\n    \"capabilities\": {},\n    \"clientInfo\": {\n      \"name\": \"clipreel-postman\",\n      \"version\": \"1.0.0\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "List video editing tools",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/mcp",
+            "description": "Read tool names, descriptions, and input schemas.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"tools/list\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Read timeline with MCP",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/mcp",
+            "description": "Requires project:read.",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get_timeline\",\n    \"arguments\": {\n      \"projectId\": \"{{project_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

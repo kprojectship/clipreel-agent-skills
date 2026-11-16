@@ -5,6 +5,8 @@ description: Identify self-contained moments in a longer recording and turn them
 
 # Create a short from a long recording
 
+Review the vertical clip and change its crop in the [ClipReel video editor](https://www.clipreel.com/).
+
 1. Import the recording or get its current ClipReel timeline. Use `transcribe_video` to get timed cues for the project. Work with source excerpts up to ten minutes per job.
 2. Use the cues to find moments that make sense on their own. Prefer a complete answer, an action with a result, or a clear before-and-after. Return the candidate start and end times and the first and last spoken phrases for review.
 3. For a selected moment, propose trimming the rest using `trim_clips`. Preview at 9:16. Check that the frame keeps the active speaker or on-screen action, that the first words survive, and that captions have room on a phone.

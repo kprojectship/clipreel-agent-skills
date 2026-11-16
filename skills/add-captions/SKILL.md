@@ -5,6 +5,8 @@ description: Generate timed ClipReel caption cues or import user-supplied subtit
 
 # Add timed captions
 
+Review caption timing and legibility in the [ClipReel video editor](https://www.clipreel.com/).
+
 1. Open the intended timeline revision. When the user supplies an SRT or VTT, convert the timestamps into seconds and preserve the text. Otherwise call `transcribe_video`, poll the job, and review returned cues against the speech.
 2. Use `add_captions` with `{projectId, revision, cues, style}`. A cue is `{start, end, text}`. Keep each short, end it before the next thought, and preserve names, dates, and numbers.
 3. Preview in the intended aspect ratio. Review timing across cuts and keep text away from platform controls. Ask the user to approve before applying or exporting when their request calls for review.

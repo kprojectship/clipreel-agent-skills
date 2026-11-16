@@ -5,6 +5,8 @@ description: Turn a user's recordings and edit instructions into a reviewable Cl
 
 # Edit a video from a prompt
 
+Review and adjust the proposed cut in the [ClipReel video editor](https://www.clipreel.com/).
+
 1. Identify the exact files or ClipReel project the user named. Keep the original files and sequence the recordings in the order requested.
 2. For files on disk, run `npx --yes --package=https://www.clipreel.com/assets/clipreel-0.1.0.tgz clipreel edit ./demo.mp4 --prompt "Remove long pauses and add captions" --aspect 16:9 --aspect 9:16 --json` with the user’s prompt and formats. Read the CLI output for the project, proposal, and preview IDs. When a project already exists, use the `edit_by_prompt` MCP tool and then poll `get_job`.
 3. Show the user the proposed operations and preview links. If the result needs approval, give the review link and wait for the user's decision. Keep previewing and applying as separate steps.

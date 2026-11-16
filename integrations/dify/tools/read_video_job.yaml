@@ -1,0 +1,22 @@
+identity:
+  name: read_video_job
+  author: kprojectship
+  label:
+    en_US: Read Video Job
+description:
+  human:
+    en_US: Read a queued ClipReel edit or render job and return its current status and result.
+  llm: Read a ClipReel job by ID. If a draft is ready, give the user its review link. Wait before checking a queued job again.
+parameters:
+  - name: job_id
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Job ID
+    human_description:
+      en_US: ID returned when ClipReel queued a job.
+    llm_description: ClipReel job ID from the previous draft or render action.
+extra:
+  python:
+    source: tools/read_video_job.py

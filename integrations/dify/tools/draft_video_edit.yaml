@@ -1,0 +1,31 @@
+identity:
+  name: draft_video_edit
+  author: kprojectship
+  label:
+    en_US: Draft a Video Edit
+description:
+  human:
+    en_US: Queue a reviewable video edit for a ClipReel project that already has footage.
+  llm: Queue a ClipReel edit proposal from a prompt and an existing project ID. Then use Read Video Job with the returned job ID. This operation uses the user’s ClipReel plan.
+parameters:
+  - name: project_id
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Project ID
+    human_description:
+      en_US: ID from the existing ClipReel project.
+    llm_description: Existing ClipReel project ID supplied by the user.
+  - name: prompt
+    type: string
+    required: true
+    form: llm
+    label:
+      en_US: Edit prompt
+    human_description:
+      en_US: Describe the cut, captions or pacing you want to see.
+    llm_description: User-approved editing instructions for the draft. Maximum 2,000 characters.
+extra:
+  python:
+    source: tools/draft_video_edit.py

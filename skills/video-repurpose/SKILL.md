@@ -5,6 +5,8 @@ description: Create widescreen, vertical, square, and portrait versions from the
 
 # Repurpose an existing cut
 
+Open the existing cut and compare aspect ratios in the [ClipReel video editor](https://www.clipreel.com/).
+
 Get the latest approved revision with `get_timeline`. Use `render_preview` at each requested aspect ratio. Start with 16:9 for wide and 9:16 for vertical. Check that titles, faces, captions, and the main action still fit each frame. If the user wants a differently composed edit, draft `reframe_video` and save the change as an approved revision before rendering that version.
 
 Queue an `export_video` for each approved output. Use the same revision where the timing should match and use a separate idempotency key per requested aspect and resolution. Return each signed download link with its aspect ratio, the revision ID, and the original editor link.
